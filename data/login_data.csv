@@ -1,0 +1,4 @@
+username,password,expected_result,expected_message
+standard_user,secret_sauce,success,Products
+locked_out_user,secret_sauce,failure,Sorry, this user has been locked out.
+invalid_user,invalid_pass,failure,Username and password do not match
