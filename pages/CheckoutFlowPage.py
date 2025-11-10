@@ -15,6 +15,8 @@ class CartPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         log.info("CartPage initialized.")
+        # Wait for cart page to be fully loaded
+        self.wait.until(EC.presence_of_element_located(self.PAGE_TITLE))
 
     def is_item_in_cart(self, item_name):
         log.info(f"Verifying if '{item_name}' is in cart.")
@@ -63,6 +65,8 @@ class CheckoutOverviewPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         log.info("CheckoutOverviewPage initialized.")
+        # Wait for overview page to be fully loaded
+        self.wait.until(EC.presence_of_element_located(self.ITEM_TOTAL_LABEL))
 
     def get_item_total(self):
         return self.get_element_text(self.ITEM_TOTAL_LABEL)
@@ -82,6 +86,8 @@ class CheckoutCompletePage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         log.info("CheckoutCompletePage initialized.")
+        # Wait for complete page to be fully loaded
+        self.wait.until(EC.presence_of_element_located(self.COMPLETE_HEADER))
 
     def get_complete_message(self):
         return self.get_element_text(self.COMPLETE_HEADER)
