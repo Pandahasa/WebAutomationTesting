@@ -54,20 +54,24 @@ git push -u origin main
 The GitHub Actions workflow (`.github/workflows/main.yml`) performs these steps:
 
 ### 1. **Environment Setup**
+
 - ✅ Checks out your code
 - ✅ Sets up Python 3.10
 - ✅ Caches pip dependencies (faster subsequent runs)
 
 ### 2. **Dependency Installation**
+
 - ✅ Installs all Python packages from `requirements.txt`
 - ✅ Installs Google Chrome browser
 
 ### 3. **Test Execution**
+
 - ✅ Runs: `pytest --browser=chrome --headless`
 - ✅ Executes all 7 test cases
 - ✅ Generates HTML report and logs
 
 ### 4. **Artifact Upload**
+
 - ✅ Saves test reports and logs
 - ✅ Available for download for 7 days
 - ✅ Runs even if tests fail (for debugging)
@@ -79,18 +83,23 @@ The GitHub Actions workflow (`.github/workflows/main.yml`) performs these steps:
 The workflow automatically triggers on:
 
 ### 1. **Push to Main Branch**
+
 ```bash
 git push origin main
 ```
+
 Every push automatically runs all tests.
 
 ### 2. **Pull Requests to Main**
+
 ```bash
 # Create a PR on GitHub
 ```
+
 Tests run before code can be merged.
 
 ### 3. **Manual Trigger**
+
 - Go to "Actions" tab on GitHub
 - Select "Web Automation Test Suite CI"
 - Click "Run workflow"
@@ -136,10 +145,12 @@ This shows the current test status in your README!
 **Common causes:**
 
 1. **Environment differences:**
+
    - CI uses Ubuntu, you might use macOS/Windows
    - Solution: Test locally with `--headless` flag
 
 2. **Timing issues:**
+
    - CI might be slower
    - Solution: Increase wait times in `BasePage`
 
@@ -161,11 +172,12 @@ pytest --browser=chrome --headless
 ### Change Python Version:
 
 Edit `.github/workflows/main.yml`:
+
 ```yaml
 - name: Set up Python 3.10
   uses: actions/setup-python@v5
   with:
-    python-version: '3.11'  # Change to 3.11, 3.12, etc.
+    python-version: "3.11" # Change to 3.11, 3.12, etc.
 ```
 
 ### Add Firefox Testing:
@@ -192,10 +204,11 @@ Edit `.github/workflows/main.yml`:
 ### Run on Schedule:
 
 Add to the `on:` section:
+
 ```yaml
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight
+    - cron: "0 0 * * *" # Run daily at midnight
 ```
 
 ---
@@ -205,11 +218,13 @@ on:
 ### Parallel Test Execution:
 
 Install pytest-xdist:
+
 ```bash
 pip install pytest-xdist
 ```
 
 Update workflow:
+
 ```yaml
 - name: Run Pytest
   run: |
@@ -221,8 +236,8 @@ Update workflow:
 ```yaml
 strategy:
   matrix:
-    python-version: ['3.9', '3.10', '3.11']
-    browser: ['chrome', 'firefox']
+    python-version: ["3.9", "3.10", "3.11"]
+    browser: ["chrome", "firefox"]
 ```
 
 ---
@@ -251,6 +266,7 @@ After pushing to GitHub, verify:
 ## 🎉 You Did It!
 
 Your web automation framework is now **production-ready** with:
+
 - ✅ Automated testing on every commit
 - ✅ Cloud-based execution
 - ✅ Detailed reports and logs

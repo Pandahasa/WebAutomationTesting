@@ -11,6 +11,7 @@ Phase 5 was already implemented in Phase 2, but let's document and verify everyt
 **Status:** IMPLEMENTED in Phase 1 (pytest.ini)
 
 **Configuration:**
+
 ```ini
 addopts =
     -v
@@ -19,11 +20,13 @@ addopts =
 ```
 
 **Verification:**
+
 - ✅ HTML report generated at: `reports/report.html` (296 KB)
 - ✅ Self-contained (single file, shareable)
 - ✅ Includes test results, timing, and metadata
 
 **To view the report:**
+
 ```bash
 open reports/report.html
 # or
@@ -38,23 +41,26 @@ python -m http.server 8000
 **Status:** IMPLEMENTED in Phase 2 (conftest.py)
 
 **Implementation:**
+
 - `pytest_runtest_makereport` hook in `tests/conftest.py`
 - Automatically captures screenshots when tests fail
 - Embeds screenshots into HTML report
 - Creates unique filenames with timestamps
 
 **Verification:**
+
 - ✅ Screenshot captured from earlier failure: `reports/screenshots/test_end_to_end_checkout_2025-11-09_23-20-49.png` (83 KB)
 - ✅ Screenshot directory auto-created
 - ✅ Clean parameterized test names in filenames
 
 **Key Code (from conftest.py):**
+
 ```python
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
-    
+
     if report.when == "call" and report.failed:
         if "driver" in item.fixturenames:
             driver = item.funcargs["driver"]
@@ -72,6 +78,7 @@ def pytest_runtest_makereport(item, call):
 **Status:** IMPLEMENTED in Phase 1 & 3
 
 **Configuration (pytest.ini):**
+
 ```ini
 # Console Logging
 log_cli = true
@@ -83,18 +90,21 @@ log_file_level = DEBUG
 ```
 
 **Verification:**
+
 - ✅ Console logs show INFO level during test execution
 - ✅ File logs capture DEBUG level (detailed Selenium commands)
 - ✅ Log file generated: `logs/test_run.log` (189 KB)
 - ✅ Logs include timestamps, levels, messages, and file locations
 
 **Logging Hierarchy:**
+
 1. **DEBUG** - Detailed Selenium WebDriver commands (file only)
 2. **INFO** - Test execution steps, Page Object actions (console + file)
 3. **WARNING** - Non-critical issues (console + file)
 4. **ERROR** - Test failures, exceptions (console + file)
 
 **Sample Log Output:**
+
 ```
 2025-11-09 23:21:47 [INFO] --- Starting test_end_to_end_checkout --- (test_checkout.py:17)
 2025-11-09 23:21:47 [INFO] Step 1: Logging in (test_checkout.py:20)
@@ -110,18 +120,21 @@ log_file_level = DEBUG
 All Phase 5 features are **fully operational**:
 
 ### ✅ HTML Reporting
+
 - Self-contained reports
 - Test results, timing, metadata
 - Embedded screenshots on failure
 - Generated automatically after each run
 
 ### ✅ Screenshot Capture
+
 - Automatic on test failure
 - Unique timestamped filenames
 - Embedded in HTML reports
 - Easy debugging
 
 ### ✅ Advanced Logging
+
 - Dual-level logging (console: INFO, file: DEBUG)
 - Comprehensive coverage (every action logged)
 - Structured format with timestamps
@@ -132,6 +145,7 @@ All Phase 5 features are **fully operational**:
 ## 📊 Current Test Artifacts
 
 After the last test run:
+
 - ✅ `reports/report.html` - 296 KB (all 7 tests)
 - ✅ `logs/test_run.log` - 189 KB (detailed execution log)
 - ✅ `reports/screenshots/test_end_to_end_checkout_2025-11-09_23-20-49.png` - 83 KB (failure screenshot)
@@ -141,6 +155,7 @@ After the last test run:
 ## 🚀 Bonus Features Implemented
 
 Beyond the guide requirements:
+
 - ✅ Test markers for flexible execution
 - ✅ Data-driven testing with CSV
 - ✅ Page chaining pattern
@@ -154,6 +169,7 @@ Beyond the guide requirements:
 **Phase 5 is COMPLETE!** ✅
 
 Ready to proceed to:
+
 - **Phase 6:** CI/CD Integration with GitHub Actions
 
 The framework now has enterprise-grade reporting and debugging capabilities!
