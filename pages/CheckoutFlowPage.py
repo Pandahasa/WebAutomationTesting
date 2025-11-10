@@ -1,5 +1,6 @@
 import logging
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from utils.BasePage import BasePage
 
 log = logging.getLogger(__name__)
@@ -40,6 +41,9 @@ class CheckoutInfoPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         log.info("CheckoutInfoPage initialized.")
+        # Wait for the first form field to be ready before proceeding
+        # This helps with headless mode stability
+        self.wait.until(EC.presence_of_element_located(self.FIRST_NAME_INPUT))
 
     def fill_shipping_info(self, first, last, code):
         log.info("Filling shipping information.")
