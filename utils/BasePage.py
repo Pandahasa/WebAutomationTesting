@@ -37,16 +37,17 @@ class BasePage:
 
     def do_send_keys(self, by_locator, text):
         """
-        Waits for an element to be visible, clears it, then sends keys.
+        Waits for an element to be clickable (interactable), clears it, then sends keys.
         """
         log.info(f"Attempting to send keys '{text}' to element: {by_locator}")
         try:
-            element = self.wait.until(EC.visibility_of_element_located(by_locator))
+            # Wait for element to be clickable (ensures it's interactable)
+            element = self.wait.until(EC.element_to_be_clickable(by_locator))
             element.clear()
             element.send_keys(text)
             log.info(f"Successfully sent keys to element: {by_locator}")
         except TimeoutException:
-            log.error(f"Timeout: Element not visible: {by_locator}", exc_info=True)
+            log.error(f"Timeout: Element not clickable/interactable: {by_locator}", exc_info=True)
             raise
 
     def get_element_text(self, by_locator):
