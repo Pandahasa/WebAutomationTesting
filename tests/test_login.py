@@ -40,8 +40,7 @@ def test_login_scenarios(driver, username, password, expected_result, expected_m
         # Use plain assert for powerful failure reporting
         assert inventory_page.is_inventory_page_displayed(), "Login succeeded but inventory page was not shown."
         page_title = inventory_page.get_page_title_text()
-        # INTENTIONALLY BROKEN: Expecting wrong title to test CI/CD failure detection
-        assert page_title == "WRONG_TITLE", f"Expected page title 'WRONG_TITLE', but got '{page_title}'."
+        assert page_title == expected_message, f"Expected page title '{expected_message}', but got '{page_title}'."
         log.info(f"Login 'success' scenario PASSED for user: {username}")
 
     else:  # expected_result == "failure"
