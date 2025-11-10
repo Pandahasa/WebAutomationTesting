@@ -1,0 +1,69 @@
+name: Web Automation Test Suite CI
+
+on:
+  # Triggers the workflow on push or pull request events for the "main" branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # --- 1. Set up the environment ---
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # Sets up a Python environment
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      # --- 2. Install dependencies ---
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # --- 3. Install browser (required for Selenium) ---
+
+      # The ubuntu-latest runner may not have Chrome. This step installs it.
+      - name: Install Google Chrome
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+
+      # --- 4. Run the tests ---
+
+      - name: Run Pytest
+        run: |
+          # Run pytest, explicitly telling it to use the headless chrome browser
+          # The HTML report and screenshots will be generated
+          pytest --browser=chrome --headless
+
+      # --- 5. Upload artifacts ---
+
+      # This step archives the test reports and logs
+      - name: Upload Test Artifacts
+        # 'if: always()' ensures this step runs even if 'Run Pytest' fails,
+        # so we can always download the failure reports.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-test-artifacts
+          # Path to the files/directories to upload
+          path: |
+            reports/
+            logs/
+          retention-days: 7
