@@ -1,0 +1,43 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C extensions
+*.so
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# IDE & OS-specific
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Test Artifacts (Reports, Logs, Screenshots)
+reports/
+logs/
+*.log
+*.html
+screenshots/
+
+# Test Framework Caches
+.pytest_cache/
+.tox/
+.coverage
+
+# Local Config Files
+config/local_config.ini
+.env
+
+# Local WebDriver binaries
+chromedriver*
+geckodriver*
+msedgedriver*

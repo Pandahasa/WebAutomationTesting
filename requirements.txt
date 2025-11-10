@@ -1,0 +1,13 @@
+# Core Automation
+selenium
+webdriver-manager
+
+# Test Framework & Execution
+pytest
+
+# Reporting & Debugging
+pytest-html
+
+# Data Handling for Data-Driven Tests
+pandas
+openpyxl
